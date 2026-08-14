@@ -1,0 +1,30 @@
+name: MANSA Core
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/mansa-core/**'
+      - '.github/workflows/mansa-core.yml'
+  pull_request:
+    paths:
+      - 'packages/mansa-core/**'
+      - '.github/workflows/mansa-core.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/mansa-core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm test
