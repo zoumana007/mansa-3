@@ -1,20 +1,15 @@
 # MANSA — Plan d’implémentation des 52 briques manquantes
 
-Ce document sert de référence de travail pour compléter progressivement le projet MANSA sans retirer les fonctionnalités existantes ni décider du MVP à la place du propriétaire du projet.
+Ce document sert de référence de travail pour compléter progressivement MANSA sans réduire les fonctionnalités existantes ni décider du MVP à la place du propriétaire.
 
 ## Règles d’exécution
+- Inspecter le code avant toute modification et éviter les doublons.
+- Implémenter des briques modulaires, testables et configurables.
+- Ajouter migrations, services, API, validations, tests et documentation lorsque nécessaire.
+- Ne jamais committer de secrets.
+- Laisser le dépôt dans un état cohérent et autant que possible compilable/testable.
 
-- Ne pas supprimer ni réduire une fonctionnalité MANSA existante sans nécessité technique démontrée.
-- Respecter l’architecture et les conventions déjà présentes dans le dépôt.
-- Avant chaque modification, inspecter le code existant afin d’éviter les doublons.
-- Implémenter les briques de manière modulaire, testable et réutilisable.
-- Ajouter ou adapter les migrations, modèles, services, API, validations, tests et documentation nécessaires.
-- Ne jamais committer de secrets, clés API, mots de passe ou données sensibles.
-- Chaque lot doit laisser le dépôt dans un état cohérent et, autant que possible, compilable/testable.
-- Les fonctionnalités doivent être configurables lorsqu’elles dépendent d’un pays, d’un partenaire, d’un niveau KYC, d’un type d’utilisateur ou d’une politique MANSA.
-
-## Les 52 points à compléter
-
+## Les 52 points
 1. Ledger financier en partie double.
 2. Rapprochement financier automatique.
 3. Moteur de risque et fraude.
@@ -68,20 +63,16 @@ Ce document sert de référence de travail pour compléter progressivement le pr
 51. Gestion des versions des CGU et politiques avec preuve d’acceptation.
 52. Architecture claire des responsabilités entre MANSA, banque partenaire, Mobile Money, réseaux cartes et autres prestataires.
 
-## Méthode de suivi
+## État d’implémentation
+`Partiel` signifie que le cœur métier existe en code mais qu’une persistance/API/intégration production peut encore être nécessaire.
 
-À chaque session de travail :
-
-1. Lire ce fichier et l’état actuel du dépôt.
-2. Identifier les points déjà totalement ou partiellement couverts.
-3. Choisir un lot cohérent de points encore manquants.
-4. Implémenter le lot sans casser les modules existants.
-5. Ajouter/mettre à jour les tests.
-6. Exécuter les validations disponibles (lint, typecheck, tests, build selon le projet).
-7. Corriger les régressions directement liées aux changements.
-8. Mettre à jour ce document avec un journal succinct de ce qui a été réellement implémenté.
-9. Committer et pousser les changements sur le dépôt.
+- 2 Rapprochement automatique : **Partiel** (`ReconciliationEngine`, détection manquant/montant/statut).
+- 3 Risque et fraude : **Partiel** (`RiskEngine`, signaux device/pays/vélocité/nouveau compte/cash-out rapide).
+- 5 Erreurs et reprises : **Partiel** (`RetryPlanner`, backoff exponentiel plafonné).
+- 7 Liquidité agents : **Partiel** (`AgentLiquidityManager`, cash/float/seuils/alertes).
+- 33 Gestion centralisée des fournisseurs : **Partiel** (`ProviderRouter`).
+- 34 Failover fournisseur : **Partiel** (sélection du fournisseur sain suivant la priorité).
 
 ## Journal d’avancement
-
-- 2026-08-14 : plan initial des 52 points ajouté au dépôt.
+- 2026-08-14 : plan initial ajouté.
+- 2026-08-14 : création du package TypeScript `packages/mansa-core` pour le lot résilience/opérations : rapprochement, scoring risque/fraude, stratégie de retry, liquidité agents et routage/failover fournisseurs. Ajout de tests unitaires et d’une CI GitHub dédiée. Les autres briques du noyau financier restent à porter dans ce dépôt lors des prochains lots.
