@@ -70,9 +70,18 @@ Ce document sert de référence de travail pour compléter progressivement MANSA
 - 3 Risque et fraude : **Partiel** (`RiskEngine`, signaux device/pays/vélocité/nouveau compte/cash-out rapide).
 - 5 Erreurs et reprises : **Partiel** (`RetryPlanner`, backoff exponentiel plafonné).
 - 7 Liquidité agents : **Partiel** (`AgentLiquidityManager`, cash/float/seuils/alertes).
+- 17 Recovery de compte sécurisé : **Partiel** (`AccountRecoveryManager`, expiration, limite d’essais, verrouillage, vérification et consommation unique).
+- 18 Multi-appareils et sessions : **Partiel** (`DeviceSessionManager`, appareils de confiance, TTL, validation et révocation en cascade).
+- 19 Device fingerprinting : **Partiel** (`fingerprintDevice`, empreinte SHA-256 canonique sans stockage de secret).
+- 20 Centre de consentement : **Partiel** (`ConsentRegistry`, consentement versionné, révocation et historique).
+- 21 Conservation des données : **Partiel** (`DataGovernanceService`, règles par type, durée et legal hold).
+- 22 Export/suppression des données : **Partiel** (export défensif et calcul d’éligibilité à suppression selon règles de conservation).
+- 23 Audit logs immuables : **Partiel** (`ImmutableAuditLog`, chaîne de hash append-only et vérification d’intégrité).
+- 24 Rôles et permissions : **Partiel** (`RbacPolicy`, permissions explicites et refus par défaut).
 - 33 Gestion centralisée des fournisseurs : **Partiel** (`ProviderRouter`).
 - 34 Failover fournisseur : **Partiel** (sélection du fournisseur sain suivant la priorité).
 
 ## Journal d’avancement
 - 2026-08-14 : plan initial ajouté.
 - 2026-08-14 : création du package TypeScript `packages/mansa-core` pour le lot résilience/opérations : rapprochement, scoring risque/fraude, stratégie de retry, liquidité agents et routage/failover fournisseurs. Ajout de tests unitaires et d’une CI GitHub dédiée. Les autres briques du noyau financier restent à porter dans ce dépôt lors des prochains lots.
+- 2026-08-14 : ajout du lot sécurité du compte et gouvernance des données : recovery sécurisé, sessions/appareils, fingerprinting, consentements versionnés, rétention/export, audit chaîné et RBAC dans `security.ts`, avec 6 tests dédiés. La CI `MANSA Core` passe sur ce lot.
