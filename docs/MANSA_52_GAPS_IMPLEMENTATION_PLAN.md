@@ -78,6 +78,8 @@ Ce document sert de référence de travail pour compléter progressivement MANSA
 - 22 Export/suppression des données : **Partiel** (export défensif et calcul d’éligibilité à suppression selon règles de conservation).
 - 23 Audit logs immuables : **Partiel** (`ImmutableAuditLog`, chaîne de hash append-only et vérification d’intégrité).
 - 24 Rôles et permissions : **Partiel** (`RbacPolicy`, permissions explicites et refus par défaut).
+- 27 Monitoring et observabilité : **Partiel** (`ObservabilityRegistry`, métriques typées et traces avec durée/statut/attributs).
+- 28 Alertes automatiques d’incident : **Partiel** (`IncidentAlertManager`, règles seuil/opérateur/labels, sévérité, cooldown, acquittement et résolution).
 - 33 Gestion centralisée des fournisseurs : **Partiel** (`ProviderRouter`).
 - 34 Failover fournisseur : **Partiel** (sélection du fournisseur sain suivant la priorité).
 
@@ -85,3 +87,4 @@ Ce document sert de référence de travail pour compléter progressivement MANSA
 - 2026-08-14 : plan initial ajouté.
 - 2026-08-14 : création du package TypeScript `packages/mansa-core` pour le lot résilience/opérations : rapprochement, scoring risque/fraude, stratégie de retry, liquidité agents et routage/failover fournisseurs. Ajout de tests unitaires et d’une CI GitHub dédiée. Les autres briques du noyau financier restent à porter dans ce dépôt lors des prochains lots.
 - 2026-08-14 : ajout du lot sécurité du compte et gouvernance des données : recovery sécurisé, sessions/appareils, fingerprinting, consentements versionnés, rétention/export, audit chaîné et RBAC dans `security.ts`, avec 6 tests dédiés. La CI `MANSA Core` passe sur ce lot.
+- 2026-08-14 : ajout du lot observabilité/incidents : registre de métriques et traces, suivi durée/statut, règles d’alertes filtrables par labels, seuils/opérateurs, niveaux de sévérité, cooldown, acquittement/résolution et 4 tests dédiés dans `observability.test.ts`.
